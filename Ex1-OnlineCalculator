@@ -1,0 +1,113 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+
+namespace OnlineCalculator.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CalculatorController : ControllerBase
+    {
+        // GET api/values
+        [HttpGet]
+        public ActionResult<IEnumerable<string>> Get()
+        {
+            return new string[] { "value1", "value2" };
+        }
+
+        // GET api/values/5
+        [HttpGet("{id}")]
+        public ActionResult<string> Get(int id)
+        {
+            return "value";
+        }
+
+        // POST api/values
+        [HttpPost]
+        public void Post([FromBody] string value)
+        {
+        }
+
+        // PUT api/values/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
+        {
+        }
+
+        // DELETE api/values/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+        }
+
+        [HttpGet("Func8")]
+        //Get : api/calculator/Func8?str1=Hello World&str2=Chen Gutman
+        public string Func8(string str1, string str2)
+        {
+            return str1 + " " + str2;
+        }
+        [HttpGet("Func10")]
+        //Get : api/calculator/Func10?str=Hello
+        public List<int> Func10(string str)
+        {
+            var indexes = new List<int>();
+            foreach(char c in str)
+            {
+                if(c>64 && c < 91)
+                {
+                    indexes.Add(c - 64);
+                }
+                if(c > 96 && c < 123)
+                {
+                    indexes.Add(c - 96);
+                }
+            }
+            return indexes;
+        }
+
+        [HttpGet("Func11")]
+        //Get :api/calculator/Func11?str=Hello
+        public string Func11(string str)
+        {
+            char[] arr;
+            arr = str.ToCharArray(0, str.Length);
+            int i, j;
+            char c;
+            for(i = 0, j = str.Length - 1; j >= str.Length / 2; i++, j--)
+            {
+                c = arr[j];
+                arr[j] = arr[i];
+                arr[i] = c;
+            }
+            str = new string(arr);
+            return str;
+        }
+        [HttpGet("Func16")]
+        //Get: api/calculator/Func16?n1=65&n2=87&n3=1&n4=200
+        public int Func16(int n1, int n2, int n3, int n4)
+        {
+            var numbers = new List<int>();
+            numbers.Add(n1);
+            numbers.Add(n2);
+            numbers.Add(n3);
+            numbers.Add(n4);
+            numbers.Sort();
+            return numbers[0];
+        }
+
+        [HttpGet("Func17")]
+        //Get: api/calculator/Func17?str=Hello&num=2
+        public string Func17(string str, int num)
+        {
+            if(num > str.Length)
+            {
+                return str;
+            }
+            string strRes = str.Insert(num, num.ToString());
+            return strRes;
+        }
+
+    }
+}
